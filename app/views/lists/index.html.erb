@@ -1,0 +1,68 @@
+<div class="list-wrap">
+<% @lists.each do |list| %>
+
+
+      
+    </div>
+  </div>
+<% end %>
+</div>
+
+<!--ここから下ブッカー-->
+<h1>New book</h1>
+<% if @list.errors.any? %>
+  <%= @list.errors.count %> error 
+  <ul>
+    <% @list.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+
+<h4>本文</h4>
+<h1>投稿一覧</h1>
+
+<% @lists.each do |list| %>
+
+<table>
+  <thead>
+    <tr>
+      <th>本のタイトル</th>
+      <th>感想</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+    　<td><span><%= list.title %></span></td>
+    　<td><span><%= list.body %></span></td>
+    　<td><span><%= image_tag list.image, size: "200x200" %></span></td>
+  　　<td><%= link_to "show", list_path(list.id) %></td>
+  　　<td><%= link_to "edit", edit_list_path(list.id) %></td>
+  　　<td><%= link_to "delete", list_path(list.id), method: :delete, "data-confirm" => "本当に削除しますか？" %></td>
+  　</tr>
+  </tbody>
+</table>
+
+
+<% end %>
+</table>
+
+<%= form_with model: @list do |f| %>
+
+<p>本のタイトル</p>
+<%= f.text_field :title %>
+
+<p>感想</p>
+<%= f.text_area :body %>
+
+<p>画像</p>
+<%= f.file_field :image, accept: "image/*" %>
+
+
+
+<%= f.submit '投稿' %>
+
+<% end %>
+

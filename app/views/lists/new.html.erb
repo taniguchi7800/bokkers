@@ -1,0 +1,52 @@
+<h1>New book</h1>
+<% if @list.errors.any? %>
+  <%= @list.errors.count %>件のエラーが発生しました
+  <ul>
+    <% @list.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+
+<h4>本文</h4>
+<h1>投稿一覧</h1>
+
+<% @lists.each do |list| %>
+
+<table>
+  <thead>
+    <tr>
+      <th>title</th>
+      <th>コメント</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+    　<td><span><%= list.title %></span></td>
+    　<td><span><%= list.body %></span></td>
+  　　<td><%= link_to "show", list_path(list.id) %></td>
+  　　<td><%= link_to "edit", edit_list_path(list.id) %></td>
+  　　<td><%= link_to "delete", list_path(list.id), method: :delete, "data-confirm" => "本当に削除しますか？" %></td>
+  　</tr>
+  </tbody>
+</table>
+
+<% end %>
+</table>
+
+<%= form_with model: @list do |f| %>
+
+<p>Title</p>
+<%= f.text_field :title %>
+
+<p>Body</p>
+<%= f.text_area :body %>
+
+<p>画像</p>
+ 
+ <%= image_tag @list.image, size: "200x200" %>
+
+<%= f.submit '投稿' %>
+
+<% end %>
